@@ -3,7 +3,7 @@
 </p>
 
 # Networks
-Guide to understand networks Models/
+Guide to understand networks Models
 
 Table of Contents
 =================
