@@ -4,4 +4,4 @@
 
 - BrainFuck is the best I just realise that and i love it.
 
-- I create some DDOS file with C & then i decrypt them to Brainfuck.
+- I create DDOS file with C & then i encrypt them to Brainfuck.
