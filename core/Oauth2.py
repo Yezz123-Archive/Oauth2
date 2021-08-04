@@ -60,8 +60,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     else:
         expire = datetime.utcnow() + timedelta(minutes=15)
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-    return encoded_jwt
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 # Get The Current Login User
 def get_current_user(token: str = Depends(oauth2_scheme),
@@ -121,8 +120,7 @@ def Create_New_User(
         user: schemas.UserCreate,
         db: Session = Depends(get_db),
         current_user: schemas.User = Depends(get_current_active_admin_user)):
-    db_user = crud.create_user(db, user)
-    return db_user
+    return crud.create_user(db, user)
 
 
 @router.get("/users/me/", response_model=schemas.User)
@@ -136,11 +134,9 @@ def Get_User_By_ID(
         user_id: int,
         db: Session = Depends(get_db),
         current_user: schemas.User = Depends(get_current_active_admin_user)):
-    db_user = crud.get_user(db, user_id)
-    return db_user
+    return crud.get_user(db, user_id)
 
 
 @router.put("/users/me/", response_model=schemas.User)
 def Update_Record(user_update: schemas.UserUpdate, db: Session = Depends(get_db), current_user: schemas.User = Depends(get_current_active_user)):
-    db_user = crud.update_user_self(db, current_user, user_update)
-    return db_user
+    return crud.update_user_self(db, current_user, user_update)
