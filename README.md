@@ -39,15 +39,20 @@ $ pipenv install -d --python 3.8
 $ pipenv install -d
 ```
 
+### Environment Variables
+
+- `SECRET_KEY`: The secret key used to encode JWTs
+- `ACCESS_TOKEN_EXPIRE_MINUTES`: The number of minutes the access token is valid for
+- `DATABASE_URL`: The database url to connect to the database (SQLite)
+
+__Note:__ Don't forget to change the `.env.sample` file to `.env` and add your own values.
+
 ### Running the Application
 
 - To run the [Main](main.py) we need to use [uvicorn](https://www.uvicorn.org/) a lightning-fast ASGI server implementation, using uvloop and httptools.
 
 ```sh
-# Running the application using uvicorn
-$ uvicorn main:app
-
-## To run the Application under a reload enviromment use -- reload
+# Run the app using uvicorn
 $ uvicorn main:app --reload
 ```
 
