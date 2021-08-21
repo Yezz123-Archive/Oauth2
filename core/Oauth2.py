@@ -10,7 +10,7 @@ from security.security import pwd_context
 from core import crud
 from model import schemas
 from database import database
-
+from decouple import config
 
 router = APIRouter(
     tags=["Oauth2"],
@@ -20,12 +20,12 @@ router = APIRouter(
 get_db = database.get_db
 
 
-SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+SECRET_KEY = config("SECRET_KEY")
+ALGORITHM = config("ALGORITHM")
+ACCESS_TOKEN_EXPIRE_MINUTES = config("ACCESS_TOKEN_EXPIRE_MINUTES")
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/Oauth2/token")
 
 
 # Verify the Hashed Password
@@ -33,14 +33,20 @@ def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
 # Get The Hashed Password
+
+
 def get_password_hash(password):
     return pwd_context.hash(password)
 
 # Get The Current User by Username
+
+
 def get_user(db: Session, username: str):
     return crud.get_user_by_username(db, username)
 
 # Authenticate the Users using Pyotp
+
+
 def authenticate_user(db: Session, username: str, password: str):
     user = get_user(db, username)
     if not user:
@@ -53,6 +59,8 @@ def authenticate_user(db: Session, username: str, password: str):
     return user
 
 # Create the Access Token and Encoded with JWT
+
+
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
     if expires_delta:
@@ -63,6 +71,8 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 # Get The Current Login User
+
+
 def get_current_user(token: str = Depends(oauth2_scheme),
                      db: Session = Depends(get_db)):
     credentials_exception = HTTPException(
@@ -84,6 +94,8 @@ def get_current_user(token: str = Depends(oauth2_scheme),
     return user
 
 # Get The Most Active User
+
+
 def get_current_active_user(
         current_user: schemas.User = Depends(get_current_user)):
     if current_user.disabled:
@@ -91,6 +103,8 @@ def get_current_active_user(
     return current_user
 
 # Get the Most Active Admin
+
+
 def get_current_active_admin_user(
         current_user: schemas.User = Depends(get_current_active_user), ):
     if current_user.role != schemas.Role.admin:
