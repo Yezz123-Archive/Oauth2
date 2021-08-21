@@ -1,3 +1,4 @@
+aiofiles==0.7.0
 asgiref==3.4.1
 autopep8==1.5.7
 click==8.0.1
@@ -6,11 +7,14 @@ ecdsa==0.17.0
 fastapi==0.67.0
 greenlet==1.1.0
 h11==0.12.0
+Jinja2==3.0.1
+MarkupSafe==2.0.1
 passlib==1.7.4
 pyasn1==0.4.8
 pycodestyle==2.7.0
 pydantic==1.8.2
 pyotp==2.6.0
+python-decouple==3.4
 python-jose==3.3.0
 python-multipart==0.0.5
 rsa==4.7.2
